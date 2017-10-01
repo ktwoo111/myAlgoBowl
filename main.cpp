@@ -134,6 +134,9 @@ void AlgoBowl(string FileName) {
 
 
 int main() {
+	/*
+	AlgoBowl("test/DanielTest.txt");
+	AlgoBowl("test/DanielTest2.txt");
 	AlgoBowl("test/MehtaExample.txt");
 	AlgoBowl("test/scenario2_10.txt");
 	AlgoBowl("test/scenario2_20.txt");
@@ -150,7 +153,8 @@ int main() {
 	AlgoBowl("test/virus.txt");
 	AlgoBowl("test/testing.txt");
 	AlgoBowl("test/testing2.txt");
-	
+	*/
+	AlgoBowl("test/testing3.txt");
 
 
 
