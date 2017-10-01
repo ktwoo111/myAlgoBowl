@@ -8,12 +8,21 @@
 using namespace std;
 
 void SortInfoVector(vector<Info>& input) {
-	sort(input.begin(), input.end(), [](const auto& lhs, const auto& rhs) {
-		return (lhs.perCost <= rhs.perCost) && (lhs.totalCost <= rhs.totalCost);
+	sort(input.begin(), input.end(), [](const auto& lhs, const auto& rhs) {		
+		//return ((lhs.perCost < rhs.perCost) && (lhs.totalCost < rhs.totalCost));
+		return (lhs.perCost < rhs.perCost);
 	});
 }
 void GetFile(string filename, vector<Info>& subSets,Set<int>& universalSet, int& universalSetSize, int& numberOfSets, bool& universalSetExists) {
 	ifstream fin(filename);
+	if (fin.is_open())
+	{
+		cout << "File opened" << endl;
+	}
+	else
+	{
+		cout << "Error opening file";
+	}
 	fin >> universalSetSize >> numberOfSets;
 
 	int id = 1;
@@ -25,11 +34,13 @@ void GetFile(string filename, vector<Info>& subSets,Set<int>& universalSet, int&
 		universalSet.insert(i);
 	}
 	
-	while (!fin.eof()) {
+	char hi = 'a';
+	for(int i = 0; i < numberOfSets; i++) {
 		do {
 			
 			fin >> number;
 			tempSet.insert(number);
+			hi = fin.peek();//testing
 		} while (fin.peek() != '\n');
 		
 		fin >> totalCost;
@@ -77,11 +88,11 @@ int main() {
 	vector<Info> infoWithUniversal;
 	Set<int> universalSet;
 	Set<int> checkSets; //the set that will be constantly built and checked with universalSet
-	GetFile("MehtaExample.txt",subSets, universalSet,universalSetSize, numberOfSets, universalSetExists);
+	GetFile("scenario2_30.txt",subSets, universalSet,universalSetSize, numberOfSets, universalSetExists);
 
-	for (Info i : subSets) {
-		i.Print();
-	}
+	//for (Info i : subSets) {
+	//	i.Print();
+	//}
 
 	bool doNotAddMore = false;
 	for (int i = 0; i < subSets.size(); i++) {
@@ -102,6 +113,9 @@ int main() {
 	if (universalSetExists && !infoWithUniversal.empty()) {
 		if (infoWithUniversal.at(0).totalCost <= solutionCost) {
 			OutputFileUniversal(infoWithUniversal);
+		}
+		else {
+			OutputFile(solutions, solutionCost);
 		}
 	}
 	else {
