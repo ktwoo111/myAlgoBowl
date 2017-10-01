@@ -98,7 +98,7 @@ void AlgoBowl(string FileName) {
 	set<int> checkSets; //the set that will be constantly built and checked with universalSet
 	GetFile(FileName, subSets, universalSet, universalSetSize, numberOfSets, universalSetExists);
 
-	//for (Info i : subSets) {
+//	for (Info i : subSets) {
 	//	i.Print();
 	//}
 
@@ -153,10 +153,11 @@ int main() {
 	AlgoBowl("test/virus.txt");
 	AlgoBowl("test/testing.txt");
 	AlgoBowl("test/testing2.txt");
+	AlgoBowl("test/virus2.txt");
+	AlgoBowl("test/virus3.txt");
+	AlgoBowl("test/virus4.txt");
 	*/
 	AlgoBowl("test/testing3.txt");
-
-
 
 	return 0;
 }
