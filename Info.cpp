@@ -6,13 +6,15 @@ Info::Info() {
 	totalCost = 0;
 	perCost = 0;
 	subSet = set<int>();
+	IsUniversalSet = false;
 }
 
-Info::Info(int id, set<int> subSet, int totalCost, double perCost) {
+Info::Info(int id, set<int> subSet, int totalCost, double perCost , bool IsUniversalSet) {
 	this->id = id;
 	this->subSet = subSet;
 	this->totalCost = totalCost;
 	this->perCost = perCost;
+	this->IsUniversalSet = IsUniversalSet;
 }
 void Info::Print() {
 	for (int x : subSet) {
@@ -20,6 +22,7 @@ void Info::Print() {
 	}
 	cout << endl;
 	cout << "totalCost: " << totalCost << endl;
-	cout << "perCost: " << perCost << endl << endl;
+	cout << "perCost: " << perCost << endl;
+	cout << "IsUniversalSet: " << IsUniversalSet << endl << endl;
 
 }

@@ -8,7 +8,8 @@ public:
 	set<int> subSet;
 	int totalCost;
 	double perCost;
+	bool IsUniversalSet;
 	Info();
-	Info(int id, set<int> subSet, int totalCost, double perCost);
+	Info(int id, set<int> subSet, int totalCost, double perCost, bool IsUniversalSet);
 	void Print();
 };

@@ -5,17 +5,20 @@
 #include<algorithm>
 using namespace std;
 
-void GetFile(string filename, vector<Info>& subSets, int& universalSetSize, int& numberOfSets) {
+void GetFile(string filename, vector<Info>& subSets, int& universalSetSize, int& numberOfSets, bool& universalSetExists) {
 	ifstream fin(filename);
+	fin >> universalSetSize >> numberOfSets;
 
 	int id = 1;
 	int totalCost = 0;
 	double perCost = 0;
 	int number = 0;
 	set<int> tempSet;
-
-
-	fin >> universalSetSize >> numberOfSets;
+	set<int> universalSet;
+	for (int i = 1; i <= universalSetSize; i++) {
+		universalSet.insert(i);
+	}
+	
 	while (!fin.eof()) {
 		do {
 			
@@ -24,8 +27,11 @@ void GetFile(string filename, vector<Info>& subSets, int& universalSetSize, int&
 		} while (fin.peek() != '\n');
 		
 		fin >> totalCost;
-		perCost = totalCost / tempSet.size();
-		subSets.push_back(Info(id,tempSet,totalCost,perCost));
+		perCost = double(totalCost) / tempSet.size();
+		if (tempSet == universalSet) {
+			universalSetExists = true;
+		}
+		subSets.push_back(Info(id,tempSet,totalCost,perCost, tempSet == universalSet));
 		tempSet.clear();
 		id++;
 	}
@@ -40,11 +46,15 @@ void GetFile(string filename, vector<Info>& subSets, int& universalSetSize, int&
 
 int main() {
 	int universalSetSize(0), numberOfSets(0);
+	bool universalSetExists = false;
 	vector<Info> subSets;
-	GetFile("testing.txt",subSets, universalSetSize, numberOfSets);
+	vector<Info> solutionSets;
+	GetFile("testing.txt",subSets, universalSetSize, numberOfSets, universalSetExists);
+	vector<bool> checks(false, universalSetSize);
 
-	for (Info x : subSets) {
-		x.Print();
+	for (int i = 0; i < subSets.size(); i++) {
+	
+	
 	}
 
 
