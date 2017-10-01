@@ -18,7 +18,7 @@ void GetFile(string filename, vector<Info>& subSets,set<int>& universalSet, int&
 	ifstream fin(filename);
 	if (fin.is_open())
 	{
-		cout << "File opened" << endl;
+	//	cout << "File opened" << endl;
 	}
 	else
 	{
@@ -59,7 +59,7 @@ void GetFile(string filename, vector<Info>& subSets,set<int>& universalSet, int&
 	fin.close();
 
 	SortInfoVector(subSets);
-	cout << "End" << endl;
+	//cout << "End" << endl;
 }
 int AddUpCost(vector<Info>& solutions) {
 	int cost = 0;
@@ -71,19 +71,24 @@ int AddUpCost(vector<Info>& solutions) {
 void OutputFile(vector<Info>& answer, int cost) {
 	ofstream fout("answer.txt");
 	fout << cost << endl;
+	cout << cost << endl;//testing
 	for (int i = 0; i < answer.size(); i++) {
 		fout << answer.at(i).id << " ";
+		cout << answer.at(i).id << " "; //testing
 	}
+	cout << endl;//testing
 	fout.close();
 }
 
 void OutputFileUniversal(vector<Info>& answer) {
 	ofstream fout("answer.txt");
 	fout << answer.at(0).totalCost << endl << answer.at(0).id << endl;
+	cout << answer.at(0).totalCost << endl << answer.at(0).id << endl;//testing
 	fout.close();
 }
 
-int main() {
+void AlgoBowl(string FileName) {
+	cout << FileName << endl; //testing
 	int universalSetSize(0), numberOfSets(0);
 	bool universalSetExists = false;
 	vector<Info> subSets;
@@ -91,18 +96,18 @@ int main() {
 	vector<Info> infoWithUniversal;
 	set<int> universalSet;
 	set<int> checkSets; //the set that will be constantly built and checked with universalSet
-	GetFile("test/virus.txt",subSets, universalSet,universalSetSize, numberOfSets, universalSetExists);
+	GetFile(FileName, subSets, universalSet, universalSetSize, numberOfSets, universalSetExists);
 
-	for (Info i : subSets) {
-		i.Print();
-	}
+	//for (Info i : subSets) {
+	//	i.Print();
+	//}
 
 	bool doNotAddMore = false;
 	for (int i = 0; i < subSets.size(); i++) {
-		if (subSets.at(i).IsUniversalSet == true) { 
+		if (subSets.at(i).IsUniversalSet == true) {
 			infoWithUniversal.push_back(subSets.at(i));
 		}
-		else if (!includes(checkSets.begin(),checkSets.end(), subSets.at(i).subSet.begin(), subSets.at(i).subSet.end()) && !doNotAddMore) {
+		else if (!includes(checkSets.begin(), checkSets.end(), subSets.at(i).subSet.begin(), subSets.at(i).subSet.end()) && !doNotAddMore) {
 			checkSets.insert(subSets.at(i).subSet.begin(), subSets.at(i).subSet.end());
 			solutions.push_back(subSets.at(i));
 		}
@@ -111,7 +116,7 @@ int main() {
 
 
 	SortInfoVector(infoWithUniversal);
-	
+
 	int solutionCost = AddUpCost(solutions);
 	if (universalSetExists && !infoWithUniversal.empty()) {
 		if (infoWithUniversal.at(0).totalCost <= solutionCost) {
@@ -122,9 +127,29 @@ int main() {
 		}
 	}
 	else {
-		OutputFile(solutions,solutionCost);
+		OutputFile(solutions, solutionCost);
 	}
-	
+
+}
+
+
+int main() {
+	AlgoBowl("test/MehtaExample.txt");
+	AlgoBowl("test/scenario2_10.txt");
+	AlgoBowl("test/scenario2_20.txt");
+	AlgoBowl("test/scenario2_30.txt");
+	AlgoBowl("test/scenario2_100.txt");
+	AlgoBowl("test/scenario2_200.txt");
+	AlgoBowl("test/scenario2_300.txt");
+	AlgoBowl("test/scenario2_400.txt");
+	AlgoBowl("test/scenario2_500.txt");
+	AlgoBowl("test/scenario3_100.txt");
+	AlgoBowl("test/scenario3_200.txt");
+	AlgoBowl("test/scenario3_300.txt");
+	AlgoBowl("test/scenario3_500.txt");
+	AlgoBowl("test/virus.txt");
+	AlgoBowl("test/testing.txt");
+	AlgoBowl("test/testing2.txt");
 	
 
 
