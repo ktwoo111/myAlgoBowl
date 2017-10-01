@@ -1,10 +1,11 @@
 #include<iostream>
 #include "info.h"
-#include "set.h"
 #include <vector>
 #include <fstream>
 #include<algorithm>
-#include "set.h"
+#include<string>
+#include<sstream>
+#include<set>
 using namespace std;
 
 void SortInfoVector(vector<Info>& input) {
@@ -13,7 +14,7 @@ void SortInfoVector(vector<Info>& input) {
 		return (lhs.perCost < rhs.perCost);
 	});
 }
-void GetFile(string filename, vector<Info>& subSets,Set<int>& universalSet, int& universalSetSize, int& numberOfSets, bool& universalSetExists) {
+void GetFile(string filename, vector<Info>& subSets,set<int>& universalSet, int& universalSetSize, int& numberOfSets, bool& universalSetExists) {
 	ifstream fin(filename);
 	if (fin.is_open())
 	{
@@ -24,26 +25,29 @@ void GetFile(string filename, vector<Info>& subSets,Set<int>& universalSet, int&
 		cout << "Error opening file";
 	}
 	fin >> universalSetSize >> numberOfSets;
+	fin.ignore();
 
 	int id = 1;
 	int totalCost = 0;
 	double perCost = 0;
-	int number = 0;
-	Set<int> tempSet;
+	int number;
+	set<int> tempSet;
 	for (int i = 1; i <= universalSetSize; i++) {
 		universalSet.insert(i);
 	}
 	
 	char hi = 'a';
+	string numbers ="";
 	for(int i = 0; i < numberOfSets; i++) {
-		do {
-			
-			fin >> number;
-			tempSet.insert(number);
-			hi = fin.peek();//testing
-		} while (fin.peek() != '\n');
-		
+		getline(fin, numbers);
+		stringstream linestream(numbers);
+		for (int i = 0; i < numbers.size();i++) {
+			while (linestream >> number) {
+				tempSet.insert(number);
+			}
+		}
 		fin >> totalCost;
+		fin.ignore();
 		perCost = double(totalCost) / tempSet.size();
 		if (tempSet == universalSet) {
 			universalSetExists = true;
@@ -52,7 +56,6 @@ void GetFile(string filename, vector<Info>& subSets,Set<int>& universalSet, int&
 		tempSet.clear();
 		id++;
 	}
-
 	fin.close();
 
 	SortInfoVector(subSets);
@@ -86,21 +89,21 @@ int main() {
 	vector<Info> subSets;
 	vector<Info> solutions;
 	vector<Info> infoWithUniversal;
-	Set<int> universalSet;
-	Set<int> checkSets; //the set that will be constantly built and checked with universalSet
-	GetFile("scenario2_30.txt",subSets, universalSet,universalSetSize, numberOfSets, universalSetExists);
+	set<int> universalSet;
+	set<int> checkSets; //the set that will be constantly built and checked with universalSet
+	GetFile("test/virus.txt",subSets, universalSet,universalSetSize, numberOfSets, universalSetExists);
 
-	//for (Info i : subSets) {
-	//	i.Print();
-	//}
+	for (Info i : subSets) {
+		i.Print();
+	}
 
 	bool doNotAddMore = false;
 	for (int i = 0; i < subSets.size(); i++) {
 		if (subSets.at(i).IsUniversalSet == true) { 
 			infoWithUniversal.push_back(subSets.at(i));
 		}
-		else if (!subSets.at(i).subSet.isSubsetOf(checkSets) && !doNotAddMore) {
-			checkSets += subSets.at(i).subSet;
+		else if (!includes(checkSets.begin(),checkSets.end(), subSets.at(i).subSet.begin(), subSets.at(i).subSet.end()) && !doNotAddMore) {
+			checkSets.insert(subSets.at(i).subSet.begin(), subSets.at(i).subSet.end());
 			solutions.push_back(subSets.at(i));
 		}
 		if (checkSets == universalSet) { doNotAddMore = true; }

@@ -1,16 +1,16 @@
 #include "info.h"
-#include "set.h"
 #include<iostream>
+#include<set>
 using namespace std;
 Info::Info() {
 	id = 0;
 	totalCost = 0;
 	perCost = 0;
-	subSet = Set<int>();
+	subSet = set<int>();
 	IsUniversalSet = false;
 }
 
-Info::Info(int id, Set<int> subSet, int totalCost, double perCost , bool IsUniversalSet) {
+Info::Info(int id, set<int> subSet, int totalCost, double perCost , bool IsUniversalSet) {
 	this->id = id;
 	this->subSet = subSet;
 	this->totalCost = totalCost;
@@ -19,7 +19,7 @@ Info::Info(int id, Set<int> subSet, int totalCost, double perCost , bool IsUnive
 }
 void Info::Print() {
 	for (int x : subSet) {
-		cout << x;
+		cout << x << " ";
 	}
 	cout << endl;
 	cout << "totalCost: " << totalCost << endl;
