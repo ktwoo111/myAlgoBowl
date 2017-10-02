@@ -87,6 +87,30 @@ void OutputFileUniversal(vector<Info>& answer) {
 	fout.close();
 }
 
+
+void SortBySize(vector<Info>& input) {
+	sort(input.begin(), input.end(), [](const auto& lhs, const auto& rhs) {
+		//return ((lhs.perCost < rhs.perCost) && (lhs.totalCost < rhs.totalCost));
+		return (lhs.subSet.size() < rhs.subSet.size());
+	});
+}
+void CleanUpFunction(vector<Info>& solutions) {
+	set<int> checkSet;
+	SortBySize(solutions);
+	//	for (Info i : solutions) {
+	//	i.Print();
+	//	}
+	for (int i = solutions.size() - 1; i >= 0; i--) {
+		if (!includes(checkSet.begin(), checkSet.end(), solutions.at(i).subSet.begin(), solutions.at(i).subSet.end())) {
+			checkSet.insert(solutions.at(i).subSet.begin(), solutions.at(i).subSet.end());
+		}
+		else {
+			solutions.erase(solutions.begin()+i);
+		}
+	}
+}
+
+
 void AlgoBowl(string FileName) {
 	cout << FileName << endl; //testing
 	int universalSetSize(0), numberOfSets(0);
@@ -117,6 +141,10 @@ void AlgoBowl(string FileName) {
 
 	SortInfoVector(infoWithUniversal);
 
+
+	CleanUpFunction(solutions);
+
+
 	int solutionCost = AddUpCost(solutions);
 	if (universalSetExists && !infoWithUniversal.empty()) {
 		if (infoWithUniversal.at(0).totalCost <= solutionCost) {
@@ -134,9 +162,10 @@ void AlgoBowl(string FileName) {
 
 
 int main() {
-	/*
+
 	AlgoBowl("test/DanielTest.txt");
 	AlgoBowl("test/DanielTest2.txt");
+	
 	AlgoBowl("test/MehtaExample.txt");
 	AlgoBowl("test/scenario2_10.txt");
 	AlgoBowl("test/scenario2_20.txt");
@@ -156,8 +185,8 @@ int main() {
 	AlgoBowl("test/virus2.txt");
 	AlgoBowl("test/virus3.txt");
 	AlgoBowl("test/virus4.txt");
-	*/
 	AlgoBowl("test/testing3.txt");
-
+	AlgoBowl("testing.txt");
+	
 	return 0;
 }
