@@ -68,6 +68,19 @@ int AddUpCost(vector<Info>& solutions) {
 	}
 	return cost;
 }
+
+void SetVerifier(vector<Info>& solutions, int universalSetSize) {
+	set<int> checker;
+	cout << "Set should go up to : " << universalSetSize << endl;
+	for (Info i : solutions) {
+		checker.insert(i.subSet.begin(), i.subSet.end());
+	}
+	for (int i : checker) {
+		cout << i << " ";
+	}
+	cout << endl << endl;
+}
+
 void OutputFile(vector<Info>& answer, int cost) {
 	ofstream fout("answer.txt");
 	fout << cost << endl;
@@ -122,25 +135,25 @@ void AlgoBowl(string FileName) {
 	set<int> checkSets; //the set that will be constantly built and checked with universalSet
 	GetFile(FileName, subSets, universalSet, universalSetSize, numberOfSets, universalSetExists);
 
-//	for (Info i : subSets) {
-	//	i.Print();
-	//}
 
-	bool doNotAddMore = false;
+	bool doNotAddMore = false; // if this is true, then we don't add anymore subset to the "solutions".
 	for (int i = 0; i < subSets.size(); i++) {
-		if (subSets.at(i).IsUniversalSet == true) {
+		if (subSets.at(i).IsUniversalSet == true) { // if that subset is a univeral set, we are putting into a separate container called infoWithUniversal
 			infoWithUniversal.push_back(subSets.at(i));
 		}
 		else if (!includes(checkSets.begin(), checkSets.end(), subSets.at(i).subSet.begin(), subSets.at(i).subSet.end()) && !doNotAddMore) {
+			//if that subset is not already a subset of the currently built set and we still have to add more, then add it to the currently building set and add to "solutions"
 			checkSets.insert(subSets.at(i).subSet.begin(), subSets.at(i).subSet.end());
 			solutions.push_back(subSets.at(i));
 		}
 		if (checkSets == universalSet) { doNotAddMore = true; }
 	}
 
+	SortInfoVector(infoWithUniversal); //Sort vector by perCost
 
-	SortInfoVector(infoWithUniversal);
-
+	if (doNotAddMore == false) { // if getting sets from the subsets, excluding ones that are universal sets, cannot complete the universal set, then we would need one of the subsets that are universal
+		solutions.push_back(infoWithUniversal.at(0));
+	}
 
 	CleanUpFunction(solutions);
 
@@ -149,13 +162,16 @@ void AlgoBowl(string FileName) {
 	if (universalSetExists && !infoWithUniversal.empty()) {
 		if (infoWithUniversal.at(0).totalCost <= solutionCost) {
 			OutputFileUniversal(infoWithUniversal);
+			SetVerifier(infoWithUniversal, universalSetSize);
 		}
 		else {
 			OutputFile(solutions, solutionCost);
+			SetVerifier(solutions, universalSetSize);
 		}
 	}
 	else {
 		OutputFile(solutions, solutionCost);
+		SetVerifier(solutions, universalSetSize);
 	}
 
 }
@@ -164,8 +180,7 @@ void AlgoBowl(string FileName) {
 int main() {
 
 	AlgoBowl("test/DanielTest.txt");
-	AlgoBowl("test/DanielTest2.txt");
-	
+	AlgoBowl("test/DanielTest2.txt");	
 	AlgoBowl("test/MehtaExample.txt");
 	AlgoBowl("test/scenario2_10.txt");
 	AlgoBowl("test/scenario2_20.txt");
@@ -182,9 +197,6 @@ int main() {
 	AlgoBowl("test/virus.txt");
 	AlgoBowl("test/testing.txt");
 	AlgoBowl("test/testing2.txt");
-	AlgoBowl("test/virus2.txt");
-	AlgoBowl("test/virus3.txt");
-	AlgoBowl("test/virus4.txt");
 	AlgoBowl("test/testing3.txt");
 	AlgoBowl("testing.txt");
 	
