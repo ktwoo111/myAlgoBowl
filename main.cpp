@@ -11,6 +11,7 @@ using namespace std;
 void SetVerifier(vector<Info>& solutions, set<int>& universalSet) {
 	set<int> checker;
 	cout << "Set should go up to : " << universalSet.size() << endl;
+	cout << "subset size: " << solutions.size() << endl;
 	for (Info i : solutions) {
 		checker.insert(i.subSet.begin(), i.subSet.end());
 	}
@@ -138,7 +139,7 @@ void CleanUpFunction(vector<Info>& solutions) {
 
 
 void AlgoBowl(string FileName) {
-	cout << FileName << endl; //testing
+	cout << endl << endl << FileName << endl; //testing
 	int universalSetSize(0), numberOfSets(0);
 	bool universalSetExists = false;
 	vector<Info> subSets;
@@ -221,7 +222,7 @@ int main() {
 	AlgoBowl("test/newVirus.txt");
 	*/
 
-	/*
+	
 	AlgoBowl("test/input_group5.txt");
 	AlgoBowl("test/input_group10.txt");
 	AlgoBowl("test/input_group14.txt");
@@ -232,7 +233,7 @@ int main() {
 	AlgoBowl("test/input_group25.txt");
 	AlgoBowl("test/input_group26.txt");
 	AlgoBowl("test/input_group27.txt");
-	*/
+	
 	
 	
 	
