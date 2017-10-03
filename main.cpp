@@ -179,6 +179,7 @@ void AlgoBowl(string FileName) {
 
 int main() {
 
+	
 	AlgoBowl("test/DanielTest.txt");
 	AlgoBowl("test/DanielTest2.txt");	
 	AlgoBowl("test/MehtaExample.txt");
@@ -199,6 +200,6 @@ int main() {
 	AlgoBowl("test/testing2.txt");
 	AlgoBowl("test/testing3.txt");
 	AlgoBowl("testing.txt");
-	
+	AlgoBowl("test/newVirus.txt");
 	return 0;
 }
