@@ -8,6 +8,25 @@
 #include<set>
 using namespace std;
 
+void SetVerifier(vector<Info>& solutions, set<int>& universalSet) {
+	set<int> checker;
+	cout << "Set should go up to : " << universalSet.size() << endl;
+	for (Info i : solutions) {
+		checker.insert(i.subSet.begin(), i.subSet.end());
+	}
+
+	if (checker == universalSet) {
+		cout << "valid sets" << endl;
+	}
+	else {
+		cout << "sets not complete" << endl;
+		for (int i : checker) {
+			cout << i << " ";
+		}
+		cout << endl;
+		exit(0);
+	}
+}
 void SortInfoVector(vector<Info>& input) {
 	sort(input.begin(), input.end(), [](const auto& lhs, const auto& rhs) {		
 		//return ((lhs.perCost < rhs.perCost) && (lhs.totalCost < rhs.totalCost));
@@ -18,11 +37,12 @@ void GetFile(string filename, vector<Info>& subSets,set<int>& universalSet, int&
 	ifstream fin(filename);
 	if (fin.is_open())
 	{
-	//	cout << "File opened" << endl;
+		cout << "File opened" << endl;
 	}
 	else
 	{
 		cout << "Error opening file";
+		exit;
 	}
 	fin >> universalSetSize >> numberOfSets;
 	fin.ignore();
@@ -59,6 +79,7 @@ void GetFile(string filename, vector<Info>& subSets,set<int>& universalSet, int&
 	fin.close();
 
 	SortInfoVector(subSets);
+	SetVerifier(subSets, universalSet);
 	//cout << "End" << endl;
 }
 int AddUpCost(vector<Info>& solutions) {
@@ -69,20 +90,11 @@ int AddUpCost(vector<Info>& solutions) {
 	return cost;
 }
 
-void SetVerifier(vector<Info>& solutions, int universalSetSize) {
-	set<int> checker;
-	cout << "Set should go up to : " << universalSetSize << endl;
-	for (Info i : solutions) {
-		checker.insert(i.subSet.begin(), i.subSet.end());
-	}
-	for (int i : checker) {
-		cout << i << " ";
-	}
-	cout << endl << endl;
-}
 
-void OutputFile(vector<Info>& answer, int cost) {
-	ofstream fout("answer.txt");
+void OutputFile(vector<Info>& answer, int cost, string FileName) {
+	string file = "outputs/Answer_For_" + FileName.substr(5,FileName.length()-4);
+	
+	ofstream fout(file);
 	fout << cost << endl;
 	cout << cost << endl;//testing
 	for (int i = 0; i < answer.size(); i++) {
@@ -93,8 +105,9 @@ void OutputFile(vector<Info>& answer, int cost) {
 	fout.close();
 }
 
-void OutputFileUniversal(vector<Info>& answer) {
-	ofstream fout("answer.txt");
+void OutputFileUniversal(vector<Info>& answer, string FileName) {
+	string file = "./outputs/Answer_For_" + FileName.substr(5, FileName.length() - 4);
+	ofstream fout(file);
 	fout << answer.at(0).totalCost << endl << answer.at(0).id << endl;
 	cout << answer.at(0).totalCost << endl << answer.at(0).id << endl;//testing
 	fout.close();
@@ -151,6 +164,8 @@ void AlgoBowl(string FileName) {
 
 	SortInfoVector(infoWithUniversal); //Sort vector by perCost
 
+
+
 	if (doNotAddMore == false) { // if getting sets from the subsets, excluding ones that are universal sets, cannot complete the universal set, then we would need one of the subsets that are universal
 		solutions.push_back(infoWithUniversal.at(0));
 	}
@@ -161,17 +176,20 @@ void AlgoBowl(string FileName) {
 	int solutionCost = AddUpCost(solutions);
 	if (universalSetExists && !infoWithUniversal.empty()) {
 		if (infoWithUniversal.at(0).totalCost <= solutionCost) {
-			OutputFileUniversal(infoWithUniversal);
-			SetVerifier(infoWithUniversal, universalSetSize);
+			SetVerifier(infoWithUniversal, universalSet);
+			OutputFileUniversal(infoWithUniversal, FileName);
+			
 		}
 		else {
-			OutputFile(solutions, solutionCost);
-			SetVerifier(solutions, universalSetSize);
+			SetVerifier(solutions, universalSet);
+			OutputFile(solutions, solutionCost, FileName);
+
 		}
 	}
 	else {
-		OutputFile(solutions, solutionCost);
-		SetVerifier(solutions, universalSetSize);
+		SetVerifier(solutions, universalSet);
+		OutputFile(solutions, solutionCost, FileName);
+		
 	}
 
 }
@@ -179,7 +197,7 @@ void AlgoBowl(string FileName) {
 
 int main() {
 
-	
+	/*
 	AlgoBowl("test/DanielTest.txt");
 	AlgoBowl("test/DanielTest2.txt");	
 	AlgoBowl("test/MehtaExample.txt");
@@ -201,5 +219,24 @@ int main() {
 	AlgoBowl("test/testing3.txt");
 	AlgoBowl("testing.txt");
 	AlgoBowl("test/newVirus.txt");
+	*/
+
+	/*
+	AlgoBowl("test/input_group5.txt");
+	AlgoBowl("test/input_group10.txt");
+	AlgoBowl("test/input_group14.txt");
+	AlgoBowl("test/input_group16.txt");
+	AlgoBowl("test/input_group17.txt");
+	AlgoBowl("test/input_group20.txt");
+	AlgoBowl("test/input_group22.txt");
+	AlgoBowl("test/input_group25.txt");
+	AlgoBowl("test/input_group26.txt");
+	AlgoBowl("test/input_group27.txt");
+	*/
+	
+	
+	
+	AlgoBowl("test/input_group23.txt");
+	AlgoBowl("test/input_group8.txt");
 	return 0;
 }
