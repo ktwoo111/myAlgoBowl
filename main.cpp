@@ -18,10 +18,10 @@ void SetVerifier(vector<Info>& solutions, set<int>& universalSet) {
 
 	if (checker == universalSet) {
 		cout << "valid sets" << endl;
-		for (int i : checker) {
-			cout << i << " ";
-		}
-		cout << endl;
+	//	for (int i : checker) {
+	//		cout << i << " ";
+	//	}
+	//	cout << endl;
 	}
 	else {
 		cout << "sets not complete" << endl;
@@ -205,47 +205,15 @@ void AlgoBowl(string FileName) {
 
 
 int main() {
-
-	/*
-	AlgoBowl("test/DanielTest.txt");
-	AlgoBowl("test/DanielTest2.txt");	
-	AlgoBowl("test/MehtaExample.txt");
-	AlgoBowl("test/scenario2_10.txt");
-	AlgoBowl("test/scenario2_20.txt");
-	AlgoBowl("test/scenario2_30.txt");
-	AlgoBowl("test/scenario2_100.txt");
-	AlgoBowl("test/scenario2_200.txt");
-	AlgoBowl("test/scenario2_300.txt");
-	AlgoBowl("test/scenario2_400.txt");
-	AlgoBowl("test/scenario2_500.txt");
-	AlgoBowl("test/scenario3_100.txt");
-	AlgoBowl("test/scenario3_200.txt");
-	AlgoBowl("test/scenario3_300.txt");
-	AlgoBowl("test/scenario3_500.txt");
-	AlgoBowl("test/virus.txt");
-	AlgoBowl("test/testing.txt");
-	AlgoBowl("test/testing2.txt");
-	AlgoBowl("test/testing3.txt");
-	AlgoBowl("testing.txt");
-	AlgoBowl("test/newVirus.txt");
-	*/
+	
+	for (int i = 1; i <= 27; i++) {
+		if (i != 2 && i != 18 && i !=7 && i!= 12) {
+			AlgoBowl("test/input_group" + to_string(i) + ".txt");
+		}
+	}
 
 	
-	AlgoBowl("test/input_group5.txt");
-	AlgoBowl("test/input_group10.txt");
-	AlgoBowl("test/input_group14.txt");
-	AlgoBowl("test/input_group16.txt");
-	AlgoBowl("test/input_group17.txt");
-	AlgoBowl("test/input_group20.txt");
-	AlgoBowl("test/input_group22.txt");
-	AlgoBowl("test/input_group25.txt");
-	AlgoBowl("test/input_group26.txt");
-	AlgoBowl("test/input_group27.txt");
-	
-	
-	
-	
-	AlgoBowl("test/input_group23.txt");
-	AlgoBowl("test/input_group8.txt");
+
+
 	return 0;
 }
