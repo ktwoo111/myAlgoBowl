@@ -18,6 +18,10 @@ void SetVerifier(vector<Info>& solutions, set<int>& universalSet) {
 
 	if (checker == universalSet) {
 		cout << "valid sets" << endl;
+		for (int i : checker) {
+			cout << i << " ";
+		}
+		cout << endl;
 	}
 	else {
 		cout << "sets not complete" << endl;
@@ -80,6 +84,7 @@ void GetFile(string filename, vector<Info>& subSets,set<int>& universalSet, int&
 	fin.close();
 
 	SortInfoVector(subSets);
+	cout << "              for the subsets from file: " << endl;
 	SetVerifier(subSets, universalSet);
 	//cout << "End" << endl;
 }
@@ -177,17 +182,20 @@ void AlgoBowl(string FileName) {
 	int solutionCost = AddUpCost(solutions);
 	if (universalSetExists && !infoWithUniversal.empty()) {
 		if (infoWithUniversal.at(0).totalCost <= solutionCost) {
+			cout << "           for the subsets from solutions: " << endl;
 			SetVerifier(infoWithUniversal, universalSet);
 			OutputFileUniversal(infoWithUniversal, FileName);
 			
 		}
 		else {
+			cout << "             for the subsets from solutions: " << endl;
 			SetVerifier(solutions, universalSet);
 			OutputFile(solutions, solutionCost, FileName);
 
 		}
 	}
 	else {
+		cout << "            for the subsets from solutions: " << endl;
 		SetVerifier(solutions, universalSet);
 		OutputFile(solutions, solutionCost, FileName);
 		
