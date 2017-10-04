@@ -15,7 +15,6 @@ void SetVerifier(vector<Info>& solutions, set<int>& universalSet) {
 	for (Info i : solutions) {
 		checker.insert(i.subSet.begin(), i.subSet.end());
 	}
-
 	if (checker == universalSet) {
 		cout << "valid sets" << endl;
 	//	for (int i : checker) {
@@ -82,6 +81,10 @@ void GetFile(string filename, vector<Info>& subSets,set<int>& universalSet, int&
 		id++;
 	}
 	fin.close();
+//	for (Info i : subSets) {
+//		i.Print();
+//	}
+
 
 	SortInfoVector(subSets);
 	cout << "              for the subsets from file: " << endl;
@@ -205,12 +208,12 @@ void AlgoBowl(string FileName) {
 
 
 int main() {
-	
 	for (int i = 1; i <= 27; i++) {
-		if (i != 2 && i != 18 && i !=7 && i!= 12) {
+	//	if (i != 2 && i != 18 && i !=7 && i!= 12) {
 			AlgoBowl("test/input_group" + to_string(i) + ".txt");
-		}
+	//	}
 	}
+	
 
 	
 
