@@ -208,10 +208,11 @@ void AlgoBowl(string FileName) {
 
 
 int main() {
+
 	for (int i = 1; i <= 27; i++) {
-	//	if (i != 2 && i != 18 && i !=7 && i!= 12) {
-			AlgoBowl("test/input_group" + to_string(i) + ".txt");
-	//	}
+		//if (i != 2 && i != 18 && i !=7 && i!= 12) {
+		AlgoBowl("test/input_group" + to_string(i) + ".txt");
+		//}
 	}
 	
 
