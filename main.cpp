@@ -17,10 +17,10 @@ void SetVerifier(vector<Info>& solutions, set<int>& universalSet) {
 	}
 	if (checker == universalSet) {
 		cout << "valid sets" << endl;
-	//	for (int i : checker) {
-	//		cout << i << " ";
-	//	}
-	//	cout << endl;
+		for (int i : checker) {
+			cout << i << " ";
+		}
+		cout << endl;
 	}
 	else {
 		cout << "sets not complete" << endl;
@@ -209,11 +209,12 @@ void AlgoBowl(string FileName) {
 
 int main() {
 
-	for (int i = 1; i <= 27; i++) {
+	AlgoBowl("test/input_group18.txt");
+	//for (int i = 1; i <= 27; i++) {
 		//if (i != 2 && i != 18 && i !=7 && i!= 12) {
-		AlgoBowl("test/input_group" + to_string(i) + ".txt");
+//		AlgoBowl("test/input_group" + to_string(i) + ".txt");
 		//}
-	}
+//	}
 	
 
 	
